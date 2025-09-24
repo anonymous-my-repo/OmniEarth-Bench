@@ -1,5 +1,5 @@
 <div align="center">
-  <h2><strong>OmniEarth-Bench: Towards Holistic Evaluation of Earth's Six Spheres and Cross-Spheres Interactions with Multimodal Observational Earth Data</strong></h2>
+  <h2><strong>OmniEarth-Bench</strong></h2>
   <h5>
   Anonymous Authors
       <br/><br/>

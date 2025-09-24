@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "omniearth"
 version = "0.0.1"
 authors = [
-    { name="###", email="###" },
+    { name="###", email="placeholdr@email.com" },
 ]
 description = "RS reasoning"
 # readme = "README.md"
