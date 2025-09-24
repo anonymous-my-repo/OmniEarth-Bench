@@ -36,7 +36,7 @@
 
 ## 🚀Evaluation
 
-### MCQ/Visual Grounding
+### MCQ/Visual Grounding/CoT
 
 #### 1. Prepare data
 
@@ -55,6 +55,8 @@
 * Install [lmms-eval](https://github.com/EvolvingLMMs-Lab/lmms-eval?tab=readme-ov-file#installation) and copy `task_config/` into `lmms_eval/tasks/`
 
 #### 3. Benchmark
+
+##### 3.1 MCQ
 
 To test on L1 task `Atmosphere`, for example, run the following command:
 
@@ -75,7 +77,66 @@ accelerate launch --num_processes 8 --main_process_port 12345 -m lmms_eval \
     --output_path ./logs/
 ```
 
-Check the yaml files for task names to run. The key `task` for each L2 tasks and `tag` for L1 tasks. For CoT-benchmark, please follow [MME-CoT](https://github.com/MME-Benchmarks/MME-CoT).
+Check the yaml files for task names to run. The key `task` for each L2 tasks and `tag` for L1 tasks. 
+
+##### 3.2 Visual Grounding
+
+```bash
+TASKS="Lithosphere_vg"	# A task tag, take visual grounding of Lithsphere as an example
+MODEL="qwen2_5_vl"
+PRETRAINED_MODEL="Qwen/Qwen2.5-VL-7B-Instruct"
+MODEL_ARGS="pretrained=${PRETRAINED_MODEL},use_flash_attention_2=True"
+LOG_SUFFIX="${MODEL}_${TASKS}"
+
+accelerate launch --num_processes 8 --main_process_port 12345 -m lmms_eval \
+    --model "qwen2_5_vl" \
+    --model_args ${MODEL_ARGS}  \
+    --tasks ${TASKS} \
+    --batch_size 1 \
+    --log_samples \
+    --log_samples_suffix ${LOG_SUFFIX} \
+    --output_path ./logs/
+```
+
+##### 3.3 CoT
+
+* Generate model response using lmms-eval.
+
+  ```bash
+  TASKS="OmniEarth_cot"	# A task tag, take visual grounding of Lithsphere as an example
+  MODEL="qwen2_5_vl"
+  PRETRAINED_MODEL="Qwen/Qwen2.5-VL-7B-Instruct"
+  MODEL_ARGS="pretrained=${PRETRAINED_MODEL},use_flash_attention_2=True"
+  LOG_SUFFIX="${MODEL}_${TASKS}"
+  
+  accelerate launch --num_processes 8 --main_process_port 12345 -m lmms_eval \
+      --model "qwen2_5_vl" \
+      --model_args ${MODEL_ARGS}  \
+      --tasks ${TASKS} \
+      --batch_size 1 \
+      --log_samples \
+      --log_samples_suffix ${LOG_SUFFIX} \
+      --output_path ./logs/
+  ```
+
+* Follow [MME-CoT](https://github.com/MME-Benchmarks/MME-CoT) to calculate precision and recall for each model.
+
+  ```bash
+  # precision
+  python main.py --name precision --num_threads 20 \
+  --prompt_path prompt/prompt_precision.txt \
+  --data_path  lmms-eval/cot/MME-CoT/results/json/onevison_mmecot_reasoning_test_for_submission.xlsx \
+  --cache_dir cache/onevision/precision \
+  --model  internlm3-latest
+  # recall
+  python main.py --name recall --num_threads 20 \
+  --prompt_path prompt/prompt_recall.txt \
+  --data_path lmms-eval/cot/MME-CoT/results/json/intern_mmecot_reasoning_test_for_submission.xlsx \
+  --cache_dir cache/intern/recall/ \
+  --model  internlm3-latest
+  ```
+
+  
 
 ### Open-ended
 

@@ -1,0 +1,39 @@
+dataset_path: parquet
+test_split: train
+dataset_kwargs:
+  data_files:
+  - /fs-computility/ai4sData/earth-shared/lmms-eval/earth/cot_shards/Pedosphere/Surface_Disaster_Assessment/Reasoning/Individual_building_damage_assessment.parquet
+  - /fs-computility/ai4sData/earth-shared/lmms-eval/earth/cot_shards/Pedosphere/Surface_Disaster_Assessment/Reasoning/Multi-image_individual_visual_localization_task.parquet
+  - /fs-computility/ai4sData/earth-shared/lmms-eval/earth/cot_shards/Pedosphere/Surface_Disaster_Assessment/Reasoning/Spatial_relationships_under_complex_conditions.parquet
+  - /fs-computility/ai4sData/earth-shared/lmms-eval/earth/cot_shards/Pedosphere/Surface_Disaster_Assessment/Reasoning/Visual_grounding_of_damaged_individual_buildings.parquet
+  - /fs-computility/ai4sData/earth-shared/lmms-eval/earth/cot_shards/Pedosphere/Urban_Development/Reasoning/Individual_building_height_estimation.parquet
+  - /fs-computility/ai4sData/earth-shared/lmms-eval/earth/cot_shards/Pedosphere/Urban_Development/Reasoning/Overall_building_height_estimation.parquet
+task: "OmniEarth_cot"
+# tag: visual_reasoning_collection
+output_type: generate_until
+doc_to_visual: !function cot_utils.mme_realworld_doc_to_visual
+doc_to_text: !function cot_utils.mme_realworld_doc_to_text
+doc_to_target: "answer"
+generation_kwargs:
+  max_new_tokens: 8192
+  temperature: 0
+  top_p: 0.95
+  num_beams: 1
+  do_sample: false
+# The return value of process_results will be used by metrics
+process_results: !function cot_utils.mmecot_process_results
+# Note that the metric name can be either a registed metric function (such as the case for GQA) or a key name returned by process_results
+metric_list:
+  - metric: submission
+    aggregation: !function cot_utils.mmecot_reasoning_aggregate_results
+    higher_is_better: true
+  # - metric: llm_as_judge_eval
+  #   aggregation: mean
+  #   higher_is_better: true
+
+lmms_eval_specific_kwargs:
+  default:
+    postfix_type: "cot"
+
+metadata:
+  - version: 0.0
