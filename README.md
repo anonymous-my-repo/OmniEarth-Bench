@@ -6,23 +6,12 @@
   </h5>
 </div>
 
-
-
-## 🔥News
-
-* **[2025-05-30]** Revised Dataset **v2** in progress (coming soon)
-* **[2025-05-29]** Paper available on arXiv.
-* **[2025-05-15]** Dataset released on Hugging Face.
-
 ## 📚 Contents
 
-- [🔥News](#news)
 - [📚Contents](#-contents)
 - [🔍Dataset Overview](#dataset-overview)
 - [📸Dataset](#dataset)
 - [🚀Evaluation](#evaluation)
-- [🔗Citation](#citation)
-- [📬Contact](#contact)
 
 ## 🔍Dataset Overview
 
@@ -53,7 +42,7 @@
 
 * First download the dataset from huggingface through WebUI or `hf` CLI.
 
-  Datset: https://huggingface.co/datasets/anonymous-my-repo/OmniEarth-Bench
+  **Datset URL**: https://huggingface.co/datasets/anonymous-my-repo/OmniEarth-Bench
 * Unzip raw.tar, and copy `jsons/` and `raw/` into `prepare_data/`.
 * Run `mk_shards.py`. This will generate parquet files used in evaluation.
 
@@ -121,24 +110,3 @@ python -m omniearth.eval.prompt_open --task-base /caption_data\jsons --image-bas
 cd gpt-4o
 python -m omniearth.eval.eval_caption --task-base . -t caption_data/caption_tasks.json
 ```
-
-## 🔗Citation
-
-If you find our work helpful, please consider citing:
-
-```latex
-@article{wang2025omniearthbenchholisticevaluationearths,
-      title={OmniEarth-Bench: Towards Holistic Evaluation of Earth's Six Spheres and Cross-Spheres Interactions with Multimodal Observational Earth Data}, 
-      author={Fengxiang Wang and Mingshuo Chen and Xuming He and YiFan Zhang and Feng Liu and Zijie Guo and Zhenghao Hu and Jiong Wang and Jingyi Xu and Zhangrui Li and Fenghua Ling and Ben Fei and Weijia Li and Long Lan and Wenjing Yang and Wenlong Zhang and Lei Bai},
-  journal={arXiv preprint arXiv:2505.23522},
-      year={2025},
-}
-```
-
-## 📬Contact
-
-For any other questions please contact:
-
-- Fengxiang Wang at [wfx23@nudt.edu.cn](mailto:wfx23@nudt.edu.cn)
-- Mingshuo Chen at [chen.mingshuo@bupt.edu.cn](mailto:chen.mingshuo@bupt.edu.cn)
-
